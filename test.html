@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lrc歌词解析/lrc Lyrics analysis</title>
+    <script src="./script/getLrc.js"></script>
+    <script src="./script/axios.min.js"></script>
+</head>
+
+<body>
+    <!-- 播放器 musicPlayer -->
+    <video src="./music/Heart To Heart.mp3" controls loop></video>
+    <!-- 歌词 Lyric-->
+    <div id="words"></div>
+    <script>
+        let video = document.querySelector('video'); // 播放器对象 video object
+        let lrc = new Lrc('./lrc/Heart To Heart.lrc');// 创建歌词对象 Create lyrics object
+        let word = document.querySelector('#words');// 显示歌词 show lyrics
+
+        video.addEventListener('timeupdate', function () { // 添加监视 add Listener
+            word.innerHTML = lrc.getWord(video.currentTime * 1000, true, 300); // 依据时间更新歌词 by time update lyrics
+        })
+    </script>
+</body>
+
+</html>
