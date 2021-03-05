@@ -1,7 +1,7 @@
 /*
  * @Author: xiaohuohu
  * @Date: 2021-03-05 08:29:51
- * @LastEditTime: 2021-03-05 14:59:31
+ * @LastEditTime: 2021-03-05 15:38:06
  * @Description: lrc文件 歌词解析器
  */
 // 歌词解析类
@@ -141,17 +141,16 @@ class Lrc {
     }
     /**
      * @description: 获取下一句歌词时间
-     * @return {Number} 时间
+     * @return {Number | undefined} 时间
      */
     getNextDeviationTime() {
         let timeArr = Object.keys(this.wordTags);
-        let len = timeArr.length;
         let nextIndex = timeArr.indexOf(this._lastTime) + 1;
-        return timeArr[Math.min(len, nextIndex)]
+        return timeArr[Math.min(timeArr.length, nextIndex)]
     }
     /**
      * @description: 获取下一句歌词
-     * @return {String} 歌词
+     * @return {String | undefined} 歌词
      */
     getNextWord() {
         let index = this.getNextDeviationTime();
