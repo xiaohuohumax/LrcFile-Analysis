@@ -1,19 +1,106 @@
-# LrcFile-Analysis
-**工地英语见谅,Bad English excuse me**
-## lrc歌词文件解析 | Lrc file analysis
+# LrcFile-Analysis v2.0
+## lrc歌词文件解析 
 
-## 介绍 | introduce
+## 与 v1.0 区别
 
-+ **这个[getLrc.js](./script/getLrc.js)脚本可以将网络上的lrc歌词文件解析出来,并可以跟随video,audio播放器显示歌词**
+1. 将 解析器 与 axios 分离,lrc 源文件需要自己获取
+2. 新加入`下一句歌词`函数
+3. 优化结构 简单易理解
 
-+ **this [getLrc.js](./script/getLrc.js) can analysis the LRC lyrics file on the network,and can follow the video, audio player to display lyrics**
-+ **注意:此脚本依赖于`axios`**
-+ **tip:This script depends on`axios`**
+## 介绍 
 
-## 使用 | use
++ **这个[Lrc.js](./script/Lrc.js)脚本可以将网络上的lrc歌词文件解析出来,并可以跟随video,audio播放器显示歌词**
 
-![use](./image/howtouse.png)
+## 使用
 
-## 效果 | show
+1. 导入 [Lrc.js](./script/Lrc.js)
+    ```html
+    <script src="./script/Lrc.js"></script>
+    ```
+
+2. 创建 Lrc 对象
+
+    ```javascript
+    let lrc = new Lrc(); // 创建Lrc 对象
+    lrc.setLrcContext(`lrc resource`); // 添加lrc源文件内容
+    // 或者
+    let lrc = new Lrc(`lrc resource`); // 创建Lrc 对象 初始化时就添加lrc源文件内容
+    ```
+
+    搭配 axios 使用
+
+    ```javascript
+    const lrcUrl = './lrc/Heart To Heart.lrc'; // lrc url
+    let lrc = new Lrc(); // 创建Lrc 对象
+    // 获取数据
+    axios.get(lrcUrl).then((response) => {
+        // 设置数据源
+        lrc.setLrcContext(response.data);
+    }).catch((error) => console.log(error));
+    ```
+
+3. 获取歌词
+    ```javascript
+    let video = document.querySelector("video")
+    // 添加时间监视
+    video.addEventListener('timeupdate', function () { 
+        let time = video.currentTime * 1000;
+        lrc.setTime(time, true); // 更新时间
+        word.innerHTML = `
+            [播放器时间:${time}]<br/>
+            [歌词时间:${lrc.getDeviationTime()}]<br/>
+            [歌词:${lrc.getWord()}]<br/>
+            [下一句歌词时间:${lrc.getNextDeviationTime()}]<br/>
+            [下一句歌词:${lrc.getNextWord()}]<br/>
+            `
+    })
+    ```
+
+## 简易 API 详见 [Lrc.js](./script/Lrc.js)
+
+```javascript
+// ===========================================
+let lrc = new Lrc('lrc resource'?)
+// 实例
+// 属性
+lrc.infoTags // 解析信息结果
+lrc.wordTags // 解析歌词结果
+// 实例方法
+lrc.setLrcContext('lrc resource') //更换新歌词
+lrc.setTime(0,true) //设置当前时间
+lrc.getWord() //获取当前歌词
+lrc.getDeviationTime() //获取当前歌词时间
+lrc.getNextWord() //获取下一句歌词
+lrc.getNextDeviationTime() //获取下一句歌词时间
+// ===========================================
+// 静态
+// 方法
+Lrc.getInfoTags('lrc resource') // 解析lrc 信息
+Lrc.getWordTags('lrc resource') // 解析lrc 歌词
+
+```
+
+## 精度优化
+
+**由于 video/audio 的 timeupdate 监听器 的时间间隔大
+所以误差较大 大概 600ms 左右 , 所以歌词或多或少会有点误差**
+
+我的优化大致思路,如下:
+
+1. 利用 requestAnimationFrame 与 Date 来细化时间间隔 设计一个时间生成器
+
+2. 监视 video/audio的play , pause 等操作 以此来约束 时间生成器
+
+## 效果
 
 ![效果](./image/use.gif)
+
+## 截图
+
+简单使用
+
+![简单使用](./image/lrcresult.png)
+
+具体代码
+
+![具体代码](./image/lrcuse.png)

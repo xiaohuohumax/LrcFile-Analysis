@@ -5,22 +5,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>lrc歌词解析/lrc Lyrics analysis</title>
-    <script src="./script/getLrc.js"></script>
-    <script src="./script/axios.min.js"></script>
+    <link rel="stylesheet" href="./css/index.css">
 </head>
 
 <body>
-    <!-- 播放器 musicPlayer -->
-    <video src="./music/Heart To Heart.mp3" controls loop></video>
-    <!-- 歌词 Lyric-->
-    <div id="words"></div>
-    <script>
-        let video = document.querySelector('video'); // 播放器对象 video object
-        let lrc = new Lrc('./lrc/Heart To Heart.lrc');// 创建歌词对象 Create lyrics object
-        let word = document.querySelector('#words');// 显示歌词 show lyrics
 
-        video.addEventListener('timeupdate', function () { // 添加监视 add Listener
-            word.innerHTML = lrc.getWord(video.currentTime * 1000, true, 300); // 依据时间更新歌词 by time update lyrics
+    <div class="lrc">
+        <pre id="lrcresource" style="width:30%"></pre>
+        <div style="width:30%">
+            <pre id="lrcInfo"></pre>
+            <pre id="lrcWord"></pre>
+        </div>
+        <div style="width:30%">
+            <!-- 播放器 -->
+            <video src="./music/Heart To Heart.mp3" controls loop></video>
+            <!-- 歌词-->
+            <div id="words"></div>
+        </div>
+
+    </div>
+    <script src="./script/axios.min.js"></script>
+    <script src="./script/Lrc.js"></script>
+    <script>
+        const lrcUrl = './lrc/Heart To Heart.lrc'; // lrc url
+        let q = (name) => document.querySelector(name);
+        let video = q("video"); // 播放器对象
+        let lrc = new Lrc(); // 创建Lrc 对象
+        // 获取数据
+        axios.get(lrcUrl).then((response) => {
+            // 设置数据源
+            lrc.setLrcContext(response.data);
+            q('#lrcresource').innerHTML = lrc.lrcContext; // 源文件
+            q('#lrcInfo').innerHTML = JSON.stringify(lrc.infoTags).replace(/,/gm, ",\n"); // 信息
+            q('#lrcWord').innerHTML = JSON.stringify(lrc.wordTags).replace(/,/gm, ",\n"); // 歌词
+        }).catch((error) => console.log(error));
+        let word = q('#words'); // 显示歌词
+        video.addEventListener('timeupdate', function () { // 添加监视
+            let time = video.currentTime * 1000;
+            lrc.setTime(time, true); // 更新时间
+            word.innerHTML = `
+                [播放器时间:${time}]<br/>
+                [歌词时间:${lrc.getDeviationTime()}]<br/>
+                [歌词:${lrc.getWord()}]<br/>
+                [下一句歌词时间:${lrc.getNextDeviationTime()}]<br/>
+                [下一句歌词:${lrc.getNextWord()}]<br/>
+                `
         })
     </script>
 </body>
