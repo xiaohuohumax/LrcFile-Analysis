@@ -80,17 +80,6 @@ Lrc.getWordTags('lrc resource') // 解析lrc 歌词
 
 ```
 
-## 精度优化
-
-**由于 video/audio 的 timeupdate 监听器 的时间间隔大
-所以误差较大 大概 600ms 左右 , 所以歌词或多或少会有点误差**
-
-我的优化大致思路,如下:
-
-1. 利用 requestAnimationFrame 与 Date 来细化时间间隔 设计一个时间生成器
-
-2. 监视 video/audio的play , pause 等操作 以此来约束 时间生成器
-
 ## 效果
 
 ![效果](./image/use.gif)
