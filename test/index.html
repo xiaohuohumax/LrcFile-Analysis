@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lrc歌词解析/lrc Lyrics analysis</title>
+</head>
+
+<body>
+    <div class="lrc">
+        <main>
+            <article>
+                <ul class="music-list"></ul>
+            </article>
+            <article>
+                <p>歌曲信息:</p>
+                <pre class="lrc-info">...</pre>
+                <hr>
+                <p>歌词信息:</p>
+                <pre class="lrc-word">...</pre>
+                <hr>
+                <p>Lrc源文件:</p>
+                <pre class="lrc-context">...</pre>
+            </article>
+        </main>
+        <footer>
+            <div class="word-background"></div>
+            <audio controls></audio>
+            <div class="words">
+                <div class="now"></div>
+                <div class="next"></div>
+            </div>
+        </footer>
+    </div>
+    <script src="./src/main.ts" type="module"></script>
+</body>
+
+</html>
