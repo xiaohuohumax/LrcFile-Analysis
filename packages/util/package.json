@@ -1,0 +1,38 @@
+{
+  "name": "@xiaohuohumax/lrc-util",
+  "version": "0.0.1",
+  "description": "LRC歌词文件解析辅助工具, 获取当前歌词, 下一句等等",
+  "type": "module",
+  "keywords": [
+    "lrc",
+    "util"
+  ],
+  "author": "xiaohuohumax",
+  "license": "MIT",
+  "homepage": "https://github.com/xiaohuohumax/LrcFile-Analysis/blob/master/packages/util#readme",
+  "scripts": {
+    "build": "rimraf dist && rollup -c"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xiaohuohumax/LrcFile-Analysis.git",
+    "directory": "packages/util"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@xiaohuohumax/lrc-parser": "workspace:^",
+    "rollup": "^4.12.0"
+  }
+}

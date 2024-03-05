@@ -1,50 +1,31 @@
 {
-  "name": "lrc-file-analysis",
-  "version": "2.0.0",
-  "private": false,
-  "description": "此脚本可以将网络上的lrc歌词文件解析出来,并可以跟随video,audio播放器显示歌词",
-  "repository": {
-    "url": "xiaohuohumax/LrcFile-Analysis",
-    "type": "git"
-  },
+  "name": "lrc",
+  "version": "0.0.1",
+  "description": "LRC歌词文件处理",
+  "private": true,
   "scripts": {
-    "build": "tsup",
-    "build:watch": "tsup --watch",
-    "test:init":"npm run build && npm link && cd test && npm i && npm link lrc-file-analysis",
-    "test:dev": "cd test && npm run dev"
+    "example:node": "pnpm -C examples/node run dev",
+    "example:vue": "pnpm -C examples/vue run dev",
+    "build": "pnpm --recursive --stream build",
+    "lint:fix": "eslint --fix --ext .ts,.vue .",
+    "changeset": "changeset",
+    "release": "pnpm build && changeset publish"
   },
-  "main": "dist/lrc.js",
-  "module": "dist/lrc.mjs",
-  "typings": "dist/lrc.d.ts",
-  "exports": {
-    ".": {
-      "import": "./dist/lrc.mjs",
-      "require": "./dist/lrc.js"
-    }
-  },
-  "files": [
-    "dist",
-    "lib"
-  ],
   "keywords": [
     "lrc",
-    "lrc-file",
-    "video",
-    "audio",
-    "music",
-    "analysis"
+    "parser"
   ],
   "author": "xiaohuohumax",
   "license": "MIT",
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^6.9.0",
-    "@typescript-eslint/parser": "^6.9.0",
-    "eslint": "^8.52.0",
-    "tsup": "^7.2.0",
-    "typescript": "^5.2.2"
-  },
-  "dependencies": {
-    "cd": "^0.3.3",
-    "test": "file:../test"
+    "@changesets/changelog-github": "^0.5.0",
+    "@changesets/cli": "^2.27.1",
+    "@typescript-eslint/eslint-plugin": "^7.1.1",
+    "@typescript-eslint/parser": "^7.1.1",
+    "eslint": "^8.57.0",
+    "eslint-plugin-vue": "^9.22.0",
+    "rimraf": "^5.0.5",
+    "rollup-plugin-dts": "^6.1.0",
+    "rollup-plugin-esbuild": "^6.1.1"
   }
 }

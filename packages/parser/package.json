@@ -1,0 +1,37 @@
+{
+  "name": "@xiaohuohumax/lrc-parser",
+  "version": "0.0.1",
+  "description": "LRC歌词文件解析器",
+  "type": "module",
+  "keywords": [
+    "lrc",
+    "parser"
+  ],
+  "author": "xiaohuohumax",
+  "license": "MIT",
+  "homepage": "https://github.com/xiaohuohumax/LrcFile-Analysis/blob/master/packages/parser#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xiaohuohumax/LrcFile-Analysis.git",
+    "directory": "packages/parser"
+  },
+  "scripts": {
+    "build": "rimraf dist && rollup -c"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "rollup": "^4.12.0"
+  }
+}
