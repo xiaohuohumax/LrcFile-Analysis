@@ -42,6 +42,7 @@ export class LrcUtil {
   }
 
   private init(): void {
+    // 重置下标
     this.lyricsIndex = 0;
     this.lrc = this.lrcParser.parser(this.scource);
   }

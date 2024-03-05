@@ -17,8 +17,11 @@ export interface Lyric {
 }
 
 export interface Lrc {
+  // 信息
   info: Info
+  // 元数据
   meta: Meta
+  // 歌词
   lyrics: Lyric[]
 }
 
