@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "LRC歌词文件处理",
   "private": true,
+  "packageManager": "pnpm@8.15.4",
   "scripts": {
     "example:node": "pnpm -C examples/node run dev",
     "example:vue": "pnpm -C examples/vue run dev",
