@@ -1,5 +1,14 @@
 # @lrc/example-node
 
+## 0.0.2
+
+### Patch Changes
+
+- [`8006b33`](https://github.com/xiaohuohumax/LrcFile-Analysis/commit/8006b33edd90603b0e1207bfdfd9cfddfb9f69f5) Thanks [@xiaohuohumax](https://github.com/xiaohuohumax)! - 添加注释
+
+- Updated dependencies [[`8006b33`](https://github.com/xiaohuohumax/LrcFile-Analysis/commit/8006b33edd90603b0e1207bfdfd9cfddfb9f69f5)]:
+  - @xiaohuohumax/lrc-parser@0.0.2
+
 ## 0.0.1
 
 ### Patch Changes
