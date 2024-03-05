@@ -11,6 +11,8 @@
   "dependencies": {
     "@xiaohuohumax/lrc-parser": "workspace:^",
     "@xiaohuohumax/lrc-util": "workspace:^",
+    "bootstrap": "^5.3.3",
+    "sass": "^1.71.1",
     "vue": "^3.4.19"
   },
   "devDependencies": {

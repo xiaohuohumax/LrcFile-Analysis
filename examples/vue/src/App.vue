@@ -1,91 +1,41 @@
 <template>
-  <div class="info">
-    <pre>{{ lrcSource }}</pre>
-    <pre>{{ lrcUtil.getLrc() }}</pre>
-  </div>
-  <div class="controls">
-    <audio ref="audio" :src="musicUrl" controls></audio>
-    <div class="lyrics">
-      <div v-html="lyricsHtml(nowLyric)"></div>
-      <div v-html="lyricsHtml(nextLyric)"></div>
+  <div class="h3 text-center mt-4">LRC歌词解析器简单使用</div>
+  <div class="d-flex fs-6 m-4">
+    <div class="w-25 flex-grow-1">
+      <div class="card p-4 mb-4">
+        <div class="h4">切换</div>
+        <hr>
+        <HandoverLyrics />
+      </div>
+      <div class="card p-4">
+        <div class="h4">滚动</div>
+        <hr>
+        <RollLyrics />
+      </div>
+    </div>
+    <div class="me-4"></div>
+    <div class="w-25 flex-grow-1">
+      <div class="card p-4 mb-4">
+        <div class="h4">LRC数据</div>
+        <hr>
+        <pre style="height:15em;">{{ lrcSource }}</pre>
+      </div>
+      <div class="card p-4">
+        <div class="h4">解析结果</div>
+        <hr>
+        <pre style="height:30em;">{{ lrc }}</pre>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import lrcSource from './assets/lrc/The Myth.lrc?raw';
-import musicUrl from './assets/music/The Myth.mp3';
-
-import { LrcUtil, Lyric } from '@xiaohuohumax/lrc-util';
+import HandoverLyrics from './component/HandoverLyrics.vue';
+import RollLyrics from './component/RollLyrics.vue';
+import lrcSource from '@/assets/lrc/The Myth.lrc?raw';
+import { LrcUtil } from '@xiaohuohumax/lrc-util';
 
 const lrcUtil = new LrcUtil(lrcSource, { fuzzy: true, parserConfig: { lyricAddOffset: true } });
 
-const audio = ref<HTMLAudioElement>(null!);
-
-const nowLyric = ref<Lyric>();
-const nextLyric = ref<Lyric>();
-
-const tagMap = {
-  M: '男', F: '女', D: '合唱'
-};
-
-function lyricsHtml(lyric: Lyric | undefined) {
-  let res = '';
-  if (lyric) {
-    res = `[${lyric.time}]: ${lyric.lyric}`;
-    if (lyric.tag) {
-      res = tagMap[lyric.tag] + res;
-    }
-  }
-  return res;
-}
-
-
-onMounted(() => audio.value.addEventListener('timeupdate', () => {
-  const time = audio.value.currentTime * 1000;
-  lrcUtil.setTime(time);
-  nowLyric.value = lrcUtil.getLyric();
-  nextLyric.value = lrcUtil.getNextLyric();
-}));
+const lrc = lrcUtil.getLrc();
 </script>
-
-<style scoped>
-.info {
-  display: flex;
-  margin: 5em;
-  font-size: 1.25em;
-  font-weight: 800;
-}
-
-.info pre {
-  flex: 1 1;
-}
-
-.controls {
-  position: fixed;
-  bottom: 0;
-  width: 100svw;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1em 10em;
-  background: rgba(0, 0, 0, 0.5);
-  font-size: 1.5em;
-  color: white;
-}
-
-.lyrics {
-  margin-top: 1em;
-  width: 100%;
-}
-
-.lyrics div:first-child {
-  text-align: left;
-}
-
-.lyrics div:last-child {
-  text-align: right;
-}
-</style>
