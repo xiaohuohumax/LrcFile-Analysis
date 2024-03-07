@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "type": "module",
   "description": "",
+  "private": true,
   "scripts": {
     "dev": "pnpm lib && vite",
     "lib": "node ./script/lib.js"
