@@ -1,5 +1,17 @@
 # @lrc/example-vue
 
+## 1.0.0
+
+### Major Changes
+
+- [`a8c6066`](https://github.com/xiaohuohumax/LrcFile-Analysis/commit/a8c606655af7bcc6c774ac6fc7ee06f6c2b7b366) Thanks [@xiaohuohumax](https://github.com/xiaohuohumax)! - 功能升级: 1.性别标识 2.单词时间支持 3.支持 script 标签引入
+
+### Patch Changes
+
+- Updated dependencies [[`a8c6066`](https://github.com/xiaohuohumax/LrcFile-Analysis/commit/a8c606655af7bcc6c774ac6fc7ee06f6c2b7b366)]:
+  - @xiaohuohumax/lrc-parser@1.0.0
+  - @xiaohuohumax/lrc-util@1.0.0
+
 ## 0.0.3
 
 ### Patch Changes
