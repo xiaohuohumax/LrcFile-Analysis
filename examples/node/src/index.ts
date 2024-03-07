@@ -1,6 +1,16 @@
 import lrcSource from './assets/lrc/The Myth.lrc?raw';
-import { LrcParser } from '@xiaohuohumax/lrc-parser';
+import { Lrc, LrcParser } from '@xiaohuohumax/lrc-parser';
 
-const lrcParser = new LrcParser({ lyricAddOffset: false });
+const testBaseParser = new LrcParser({
+  genderMatchRules: [
+    {
+      F: '\\s*男:\\s*',
+      M: '\\s*女:\\s*',
+      D: '\\s*合唱:\\s*',
+    }
+  ]
+});
 
-console.log(lrcParser.parser(lrcSource));
+const lrc: Lrc = testBaseParser.parser(lrcSource);
+
+console.log(JSON.stringify(lrc, undefined, 2));

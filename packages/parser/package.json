@@ -5,6 +5,7 @@
   "type": "module",
   "keywords": [
     "lrc",
+    "lyrics",
     "parser"
   ],
   "author": "xiaohuohumax",
@@ -30,8 +31,5 @@
   "types": "./dist/index.d.ts",
   "files": [
     "dist"
-  ],
-  "dependencies": {
-    "rollup": "^4.12.0"
-  }
+  ]
 }

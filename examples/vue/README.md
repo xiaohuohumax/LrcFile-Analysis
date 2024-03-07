@@ -1,4 +1,8 @@
-# @xiaohuohumax/lrc-util vue 环境示例
+# @lrc/example-vue
+
+**解析器 vue 环境 Demo**
+
+## Start
 
 ```shell
 pnpm i

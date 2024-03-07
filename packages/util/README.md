@@ -11,25 +11,30 @@ npm i @xiaohuohumax/lrc-util
 ## Use
 
 ```ts
+import lrcSource from './***.lrc?raw';
 import { LrcUtil, Lyric } from '@xiaohuohumax/lrc-util';
 
-// 初始化 & 配置
-const lrcUtil = new LrcUtil(lrcSource, { fuzzy: true, parserConfig: { lyricAddOffset: true } });
+const lrcUtil = new LrcUtil(lrcSource);
 
-// audio dom
-const audio = document.querySelector('audio');
+const audio = ref<HTMLAudioElement>(null!);
 
-// 添加监听
-audio.addEventListener('timeupdate', () => {
-  // 获取时间 毫秒
+const nowLyric = ref<Lyric>();
+const nextLyric = ref<Lyric>();
+
+function timeUpdate() {
   const time = audio.value.currentTime * 1000;
   // 设置时间
   lrcUtil.setTime(time);
   // 当前歌词
-  const nowLyric: Lyric = lrcUtil.getLyric();
+  nowLyric.value = lrcUtil.getLyric();
   // 下一句歌词
-  const nextLyric: Lyric = lrcUtil.getNextLyric();
-})
+  nextLyric.value = lrcUtil.getNextLyric();
+}
+
+onMounted(() => {
+  timeUpdate();
+  audio.value.addEventListener('timeupdate', timeUpdate);
+});
 ```
 
 ## example

@@ -1,4 +1,8 @@
-# @xiaohuohumax/lrc-parser node 环境示例
+# @lrc/example-node
+
+**解析器 Node 环境 Demo**
+
+## Start
 
 ```shell
 pnpm i

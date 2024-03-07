@@ -11,15 +11,13 @@ npm i @xiaohuohumax/lrc-parser
 ## Use
 
 ```ts
-// 歌词内容
-import lrcSource from './assets/lrc/The Myth.lrc?raw';
-import { LrcParser } from '@xiaohuohumax/lrc-parser';
+import lrcSource from './***.lrc?raw';
+import { LrcParser, Lrc } from '@xiaohuohumax/lrc-parser';
 
-// 初始化 & 配置
-const lrcParser = new LrcParser({ lyricAddOffset: false });
+const lrcParser = new LrcParser();
+const lrc: Lrc = lrcParser.parser(lrcSource);
 
-// 解析结果
-console.log(lrcParser.parser(lrcSource));
+console.log(JSON.stringify(lrc, undefined, 2));
 ```
 
 ## example

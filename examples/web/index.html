@@ -1,4 +1,67 @@
-[ti:美丽的神话]
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lrc Web Demo</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    main {
+      display: flex;
+      margin: 2em;
+      font-size: 1.25em;
+      font-weight: 900;
+    }
+
+    main div {
+      border: 1px solid #234;
+      padding: 2em;
+      border-radius: .5em;
+    }
+
+    main div h4 {
+      margin-bottom: 1em;
+    }
+
+    main div:first-child {
+      flex-shrink: 1;
+      margin-right: 2em;
+    }
+
+    main div:last-child {
+      flex-grow: 1;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <div>
+      <h4>歌词</h4>
+      <pre id="source"></pre>
+    </div>
+    <div>
+      <h4>解析结果</h4>
+      <pre id="lrc"></pre>
+    </div>
+  </main>
+
+  <script src="./dist/lrc-parser.min.js"></script>
+  <script src="./dist/lrc-util.min.js"></script>
+
+  <script>
+    const q = (select) => document.querySelector(select);
+
+    const sourcePre = q('pre#source');
+    const lrcPre = q('pre#lrc');
+
+    const source = `[ti:美丽的神话]
 [ar:成龙&金喜善]
 [al:电影神话原声带]
 [length:4:50]
@@ -41,4 +104,20 @@
 [04:10.64]D: 唯有真爱追随你我 穿越无尽时空
 [04:18.05]F: 서로 사랑한단 말도 못했었네요
 [04:28.19]M: 爱是心中唯一不变美丽的神话
-[04:42.00]
+[04:42.00]`;
+
+    sourcePre.innerText = source;
+
+    const lrcParser = new Lp.LrcParser();
+    lrcPre.innerText = JSON.stringify(lrcParser.parser(source), undefined, 2);
+
+    const lrcUtil = new Lu.LrcUtil(source);
+
+    lrcUtil.setTime(0)
+    console.log('解析结果:', lrcUtil.getLrc());
+    console.log('当前歌词:', lrcUtil.getLyric());
+    console.log('下一句歌词:', lrcUtil.getNextLyric());
+  </script>
+</body>
+
+</html>

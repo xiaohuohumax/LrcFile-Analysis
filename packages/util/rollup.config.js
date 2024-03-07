@@ -2,15 +2,32 @@
 import { defineConfig } from 'rollup';
 import dts from 'rollup-plugin-dts';
 import esbuild from 'rollup-plugin-esbuild';
+import json from '@rollup/plugin-json';
+import license from 'rollup-plugin-license';
+import resolve from '@rollup/plugin-node-resolve';
 import { builtinModules } from 'node:module';
+import fs from 'node:fs';
+
+const packageJson = JSON.parse(fs.readFileSync('./package.json', { encoding: 'utf-8' }));
 
 const entries = {
   index: './src/index.ts'
 };
 
-const plugins = [
-  esbuild()
-];
+const banner = `/**
+ * ${packageJson.name} ${packageJson.version}
+ * Copyright (c) 2020-present ${packageJson.author}
+ * @license ${packageJson.license}
+ */`;
+
+function initPlugins(minify = false) {
+  return [
+    resolve(),
+    esbuild({ minify }),
+    json(),
+    license({ banner })
+  ];
+}
 
 const external = [
   ...builtinModules,
@@ -24,9 +41,8 @@ export default defineConfig([
       dir: 'dist',
       format: 'esm',
       entryFileNames: '[name].mjs',
-      chunkFileNames: 'chunk-[name].mjs',
     },
-    plugins,
+    plugins: initPlugins(),
     external
   },
   {
@@ -35,9 +51,8 @@ export default defineConfig([
       dir: 'dist',
       format: 'cjs',
       entryFileNames: '[name].cjs',
-      chunkFileNames: 'chunk-[name].cjs',
     },
-    plugins,
+    plugins: initPlugins(),
     external
   },
   {
@@ -50,6 +65,20 @@ export default defineConfig([
     plugins: [
       dts({ respectExternal: true }),
     ],
+    external
+  },
+  {
+    input: entries,
+    output: {
+      dir: 'dist',
+      format: 'umd',
+      name: 'Lu',
+      entryFileNames: 'lrc-util.min.js',
+      globals: {
+        '@xiaohuohumax/lrc-parser': 'Lp'
+      }
+    },
+    plugins: initPlugins(false),
     external
   },
 ]);

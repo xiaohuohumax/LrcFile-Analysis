@@ -1,12 +1,10 @@
 <template>
-  <div class="controls">
-    <audio class="w-100" ref="audio" :src="musicUrl" controls></audio>
-    <div ref="lyricsMain" class="card overflow-y-hidden position-relative mt-4" style="height:20em;">
-      <div ref="lyricBody" class="lyric-body w-100 position-absolute text-center fw-blod">
-        <div ref="items" :class="lyric.tag?.toLocaleLowerCase()" :id="lyric.time + ''" class="item mt-2"
-          v-for="lyric in lrc.lyrics.filter(l => l.lyric != '')" :key="lyric.time">
-          {{ lyricsHtml(lyric) }}
-        </div>
+  <audio class="w-100" ref="audio" :src="musicUrl" controls></audio>
+  <div ref="lyricsMain" class="card overflow-y-hidden position-relative mt-4" style="height:20em;">
+    <div ref="lyricBody" class="lyric-body w-100 position-absolute text-center fw-blod">
+      <div ref="lyricItems" class="lyric-item mt-2" :id="lyric.start.toString()" v-for="lyric in lrc.lyrics"
+        :key="lyric.start">
+        {{ lyricsToText(lyric) }}
       </div>
     </div>
   </div>
@@ -16,46 +14,49 @@
 import { ref, onMounted, watch } from 'vue';
 import lrcSource from '@/assets/lrc/The Myth.lrc?raw';
 import musicUrl from '@/assets/music/The Myth.mp3';
-import { lyricsHtml } from '../util/lyricTag';
+import { lyricsToText } from '../util/lyricGender';
 
 import { LrcUtil, Lyric } from '@xiaohuohumax/lrc-util';
 
-const lrcUtil = new LrcUtil(lrcSource, { fuzzy: true, parserConfig: { lyricAddOffset: true } });
-
-const audio = ref<HTMLAudioElement>(null!);
+// 移动歌词
 const lyricsMain = ref<HTMLDivElement>(null!);
 const lyricBody = ref<HTMLDivElement>(null!);
 
-const items = ref<HTMLDivElement[]>(null!);
+function updateLyricBodyTop(top: number): void {
+  const bodyHeight = lyricsMain.value.clientHeight;
+  lyricBody.value.style.top = top + bodyHeight / 2 + 'px';
+}
 
-const lrc = lrcUtil.getLrc();
+// 监听歌词变化并修改样式
+const NOW_ITEM = 'now';
 const nowLyric = ref<Lyric>(null!);
+const lyricItems = ref<HTMLDivElement[]>(null!);
+
+function updateNowLyricItemStyle() {
+  lyricItems.value.forEach(item => item.classList.remove(NOW_ITEM));
+  const nowItem = lyricItems.value.find(item => item.id == nowLyric.value.start.toString());
+  if (nowItem) {
+    nowItem?.classList.add(NOW_ITEM);
+    updateLyricBodyTop(-1 * nowItem.offsetTop - nowItem.clientHeight / 2);
+  }
+}
+
+watch(() => nowLyric.value, updateNowLyricItemStyle);
+window.addEventListener('resize', updateNowLyricItemStyle);
+
+// 播放器添加时间监视
+const audio = ref<HTMLAudioElement>(null!);
+const lrcUtil = new LrcUtil(lrcSource);
+const lrc = lrcUtil.getLrc();
 
 onMounted(() => {
-  const bodyHeight = lyricsMain.value.clientHeight;
+  updateLyricBodyTop(0);
 
-  lyricBody.value.style.top = bodyHeight / 2 + 'px';
-
-  watch(() => nowLyric.value, () => {
-    if (nowLyric.value.lyric == '') {
-      return;
-    }
-
-    items.value.forEach(item => item.classList.remove('now'));
-
-    const nowItem = items.value.find(item => item.id == nowLyric.value.time + '');
-
-    if (nowItem) {
-      nowItem?.classList.add('now');
-      lyricBody.value.style.top = (-1 * nowItem.offsetTop + bodyHeight / 2 - nowItem.clientHeight / 2) + 'px';
-    }
-  });
-
+  // 时间监听
   audio.value.addEventListener('timeupdate', () => {
     lrcUtil.setTime(audio.value.currentTime * 1000);
     nowLyric.value = lrcUtil.getLyric();
   });
-
 });
 </script>
 
@@ -65,7 +66,7 @@ onMounted(() => {
   transition: all 1s;
 }
 
-.item {
+.lyric-item {
   transition: all .5s ease-in-out;
   opacity: .4;
 }

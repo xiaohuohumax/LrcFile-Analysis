@@ -7,11 +7,6 @@
   "scripts": {
     "dev": "vite-node src/index.ts"
   },
-  "keywords": [
-    "ESM",
-    "TypeScript",
-    "vite-node"
-  ],
   "author": "xiaohuohumax",
   "license": "MIT",
   "devDependencies": {

@@ -1,14 +1,17 @@
 {
-  "name": "lrc",
+  "name": "lrc-monorepo",
   "version": "0.0.1",
   "description": "LRC歌词文件处理",
   "private": true,
   "packageManager": "pnpm@8.15.4",
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "build": "pnpm -r --filter=./packages/** --stream run build",
     "example:node": "pnpm -C examples/node run dev",
     "example:vue": "pnpm -C examples/vue run dev",
-    "build": "pnpm --recursive --stream build",
-    "lint:fix": "eslint --fix --ext .ts,.vue .",
+    "example:web": "pnpm -C examples/web run dev",
+    "lint:fix": "eslint --fix --ext .ts,.vue,.js .",
+    "clear":"rimraf -g **/node_modules **/dist",
     "changeset": "changeset",
     "release": "pnpm build && changeset publish"
   },
@@ -21,12 +24,16 @@
   "devDependencies": {
     "@changesets/changelog-github": "^0.5.0",
     "@changesets/cli": "^2.27.1",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^15.2.3",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
     "eslint": "^8.57.0",
     "eslint-plugin-vue": "^9.22.0",
     "rimraf": "^5.0.5",
+    "rollup": "^4.12.0",
     "rollup-plugin-dts": "^6.1.0",
-    "rollup-plugin-esbuild": "^6.1.1"
+    "rollup-plugin-esbuild": "^6.1.1",
+    "rollup-plugin-license": "^3.2.0"
   }
 }
