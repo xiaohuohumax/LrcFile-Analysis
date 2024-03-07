@@ -1,5 +1,14 @@
 # @xiaohuohumax/lrc-util
 
+## 1.0.1
+
+### Patch Changes
+
+- [`baac343`](https://github.com/xiaohuohumax/LrcFile-Analysis/commit/baac34385dbe4f36d35fcdeefe184d8fe2568c8a) Thanks [@xiaohuohumax](https://github.com/xiaohuohumax)! - 添加注释
+
+- Updated dependencies [[`baac343`](https://github.com/xiaohuohumax/LrcFile-Analysis/commit/baac34385dbe4f36d35fcdeefe184d8fe2568c8a)]:
+  - @xiaohuohumax/lrc-parser@1.0.1
+
 ## 1.0.0
 
 ### Major Changes

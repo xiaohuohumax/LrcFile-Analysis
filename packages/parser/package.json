@@ -1,6 +1,6 @@
 {
   "name": "@xiaohuohumax/lrc-parser",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "LRC歌词文件解析器",
   "type": "module",
   "keywords": [

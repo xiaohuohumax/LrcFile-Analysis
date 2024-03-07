@@ -1,5 +1,12 @@
 # @lrc/example-node
 
+## 1.0.1
+
+### Patch Changes
+
+- Updated dependencies [[`baac343`](https://github.com/xiaohuohumax/LrcFile-Analysis/commit/baac34385dbe4f36d35fcdeefe184d8fe2568c8a)]:
+  - @xiaohuohumax/lrc-parser@1.0.1
+
 ## 1.0.0
 
 ### Major Changes
