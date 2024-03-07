@@ -1,6 +1,6 @@
 {
   "name": "@xiaohuohumax/lrc-util",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "LRC歌词文件解析辅助工具, 获取当前歌词, 下一句等等",
   "type": "module",
   "keywords": [
