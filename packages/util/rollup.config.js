@@ -78,7 +78,7 @@ export default defineConfig([
         '@xiaohuohumax/lrc-parser': 'Lp'
       }
     },
-    plugins: initPlugins(false),
+    plugins: initPlugins(true),
     external
   },
 ]);
